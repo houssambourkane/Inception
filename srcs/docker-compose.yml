@@ -1,0 +1,104 @@
+version: "3.3"
+services:
+  nginx:
+    build: ./requirements/nginx/
+    container_name: nginx
+    ports:
+      - '443:443'
+    depends_on:
+      - wordpress
+    networks:
+      - my_network
+    volumes:
+      - wpdata:/var/www/html
+    restart: always
+  mariadb:
+    build: ./requirements/mariadb
+    container_name: mariadb
+    volumes:
+      - mariadbdata:/var/lib/mysql
+    ports:
+      - '3306:3306'
+    networks:
+      - my_network
+    env_file:
+    - .env/
+    restart: always
+  wordpress:
+    build: ./requirements/wordpress
+    container_name: wordpress
+    env_file:
+      - .env/
+    ports:
+      - '9000:9000'
+    depends_on:
+      - mariadb
+    networks:
+      - my_network
+    volumes:
+      - wpdata:/var/www/html/
+    restart: always
+  ftp:
+    build: ./requirements/bonus/ftp
+    container_name: ftp
+    networks:
+      - my_network
+    ports:
+      - '21:21'
+      - '20:20'
+    env_file:
+      - .env/
+    volumes:
+      - wpdata:/var/www/html/
+    restart: always
+  redis:
+    build: ./requirements/bonus/redis
+    container_name: redis
+    ports:
+      - '6379:6379'
+    networks:
+     - my_network
+    restart: always
+  adminer:
+    build: ./requirements/bonus/adminer
+    container_name: adminer
+    ports:
+      - '30000:8080'
+    depends_on:
+      - mariadb
+    networks:
+      - my_network
+    volumes:
+      - wpdata:/var/www/html/
+    restart: always 
+  jenkins:
+    image: jenkins/jenkins
+    container_name: jenkins
+    ports:
+     - '8080:8080'
+    networks:
+     - my_network
+    restart: unless-stopped
+    privileged: true
+    user: root
+    volumes:
+      - jenkinsstorage:/var/jenkins_home/
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /usr/local/bin/docker:/usr/local/bin/docker
+networks:
+  my_network:
+    driver: bridge
+volumes:
+  jenkinsstorage:
+  mariadbdata:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /home/hbourkan/data/mariadb
+  wpdata:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /home/hbourkan/data/html
