@@ -28,3 +28,32 @@ srcs<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|___adminer<br>
         
  *Each of the requirements have it's own Dockerfile and configuration (Jenkins will be the only service that pull the image from dockerhub) *
+
+
+To use this project, please use the following steps
+
+Change the variables WEBSITE_NAME and WEBSITE_REPO to use your own website, the WEBSITE_REPO has to reside in a code hosting platform that supports git such as https://github.com/
+
+### Install docker on your local machine, follow this guide https://docs.docker.com/engine/install/
+
+### Install git on your local machine, it will depend on the OS running inside it, for example debian OS has the package manager Apt, to install git in Debian we use
+```
+sudo apt-get update && apt-get install git -y
+```
+### Clone the repository on your local machine
+```
+git clone https://github.com/houssambourkane/Inception && cd Inception
+```
+
+### Run the following command to start the system
+```
+make all
+```
+### In order to run it on a detach mode use
+```
+make detach
+```
+### To clean the resources use
+```
+make docker_purge
+```
