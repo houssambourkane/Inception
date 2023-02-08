@@ -1,7 +1,8 @@
 DOCKER_COMMAND = sudo docker compose -f ./srcs/docker-compose.yml
 WEBSITE_NAME = hbourkan.42.fr
+WEBSITE_REPO = https://github.com/houssambourkane/my_portfolio.git
 RMV = sudo rm -rf
-CLONE_WEBSITE = sudo /bin/sh -c 'if [ ! -d ~/data/html/${WEBSITE_NAME} ]; then git clone https://github.com/houssambourkane/my_portfolio.git ~/data/html/${WEBSITE_NAME}/; fi'
+CLONE_WEBSITE = sudo /bin/sh -c 'if [ ! -d ~/data/html/${WEBSITE_NAME} ]; then git clone ${WEBSITE_REPO} ~/data/html/${WEBSITE_NAME}/; fi'
 ALL_CONTAINERS = `docker ps -qa`
 ALL_VOLUMES = `docker volume ls -q`
 ADD_HOST = sudo /bin/sh -c 'if grep "${WEBSITE_NAME}" /etc/hosts ; then echo "DNS mapping already exists on hosts"; else sudo echo "127.0.0.1       ${WEBSITE_NAME}" >> /etc/hosts ;fi'
