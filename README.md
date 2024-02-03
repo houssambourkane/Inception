@@ -27,7 +27,7 @@ srcs<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|___ftp<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|___adminer<br>
         
- *Each of the requirements have it's own Dockerfile and configuration (Jenkins will be the only service that pull the image from dockerhub) *
+ *Each of the requirements have it's own Dockerfile and configuration (Jenkins will be the only service that pull the image from dockerhub)*
 
 
 To use this project, please use the following steps
